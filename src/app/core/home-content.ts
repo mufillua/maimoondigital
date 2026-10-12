@@ -6,7 +6,7 @@
 
 export type InlineObject = 'appIcon' | 'monogram' | 'toggle' | 'wave' | 'devices' | 'sparkle' | 'globe' | 'designDev' | 'laptop' | 'puzzle';
 
-export type StyledVariant = 'outline' | 'mono' | 'serif' | 'squeeze' | 'redo' | 'select' | 'selected';
+export type StyledVariant = 'outline' | 'mono' | 'serif' | 'squeeze' | 'redo' | 'select' | 'selected' | 'brand';
 
 export type Segment =
   | { kind: 'text'; text: string; lead?: boolean }
@@ -40,10 +40,8 @@ export function homeParagraphs(links: HomeLinks): Paragraph[] {
       segments: [
         { kind: 'text', text: 'We build digital experiences that move businesses forward.', lead: true },
         { kind: 'object', object: 'appIcon', lead: true },
-        {
-          kind: 'text',
-          text: 'Maimoon Digital partners with small and medium scale businesses to design and develop',
-        },
+        { kind: 'styled', variant: 'brand', text: 'Maimoon Digital' },
+        { kind: 'text', text: 'partners with small and medium scale businesses to design and develop' },
         { kind: 'object', object: 'designDev' },
         {
           kind: 'text',

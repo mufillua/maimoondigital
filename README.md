@@ -90,8 +90,9 @@ The image fades in over the card. If a file is missing, the card stays.
 | Where | What happens |
 | --- | --- |
 | Opening sentence | Words rise in one by one on load; the app icon pops in after them. |
-| All home text | Grey words turn black as they pass the middle of the screen, left to right. |
+| All home text | Grey words turn black left to right, running one line ahead of the middle of the screen (`LEAD_LINES` in `scroll-reveal.directive.ts`). |
 | Inline icons and client logos | Pop in with a small overshoot when reached. Logos tilt on hover. Three sparkles after "stand out." twinkle in turn; a globe turns with a pin landing on it after "presence online."; a tile flips between a pen nib and </> after "design and develop"; a laptop opens and builds a page after "every screen,"; two puzzle pieces (design and code) click together after "responsive development," |
+| "Maimoon Digital" (2nd line) | The studio name inks in from left to right in brand navy and blue, then a soft shine crosses it every few seconds. |
 | "That's where we step in." | A text-selection highlight (the browser's own #dbe7ff) sweeps across the sentence and on into the next line, as if dragged with the mouse. |
 | Services | "Angular development" types itself out with a caret; "Product catalogues" writes in; "Responsive builds" stretches; "Redesigns" gets a marker sweep; "Deployment & domains" gets a selection box, cursor and its real size badge. |
 | Showcase card (phones/tablets) | Cycles the four client logos with progress bars; pauses on touch/hover and when off screen. |
