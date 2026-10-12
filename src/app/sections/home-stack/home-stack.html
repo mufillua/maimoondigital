@@ -1,0 +1,64 @@
+<div class="stack" appScrollReveal>
+  @for (p of paragraphs; track $index; let first = $first) {
+    <section class="block" [attr.id]="p.id ?? null">
+      @if (p.heading) {
+        @if (first) {
+          <h1 class="sr-only">{{ p.heading }}</h1>
+        } @else {
+          <h2 class="sr-only">{{ p.heading }}</h2>
+        }
+      }
+      <p class="para">
+        @for (tok of p.tokens; track $index) {
+          @switch (tok.type) {
+            @case ('words') {
+              @for (w of tok.words; track $index; let last = $last; let wi = $index) {
+                @if (last && tok.trailing; as obj) {
+                  <span class="nw"><span class="w" data-w [class.is-on]="tok.lead" [attr.data-lead]="tok.lead ? '' : null"
+                    [style.--i]="wi">{{ w }}</span><app-inline-object [kind]="obj.object" [label]="obj.label"
+                    [class.is-on]="obj.lead" [attr.data-lead]="obj.lead ? '' : null" [style.--i]="wi + 1" /></span>{{ ' ' }}
+                } @else {
+                  <span class="w" data-w [class.is-on]="tok.lead" [attr.data-lead]="tok.lead ? '' : null" [style.--i]="wi">{{ w }}</span>{{ ' ' }}
+                }
+              }
+            }
+            @case ('styled') {
+              <span [class]="'styled styled--' + tok.variant" data-w [style.--n]="tok.text!.length">
+                <span class="styled__text">{{ tok.text }}</span>
+                @if (tok.variant === 'select') {
+                  <span class="handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                  <span class="dims" aria-hidden="true" appMeasure></span>
+                  <svg class="cursor" viewBox="0 0 16 20" aria-hidden="true" focusable="false">
+                    <path d="M1.5 1.5v14.2l3.9-3.6 2.6 6 2.3-1-2.6-5.9h5.3z" fill="#111" stroke="#fff" stroke-width="1.2" stroke-linejoin="round" />
+                  </svg>
+                }
+              </span>{{ ' ' }}
+            }
+            @case ('object') {
+              <app-inline-object [kind]="tok.object!" [label]="tok.label" [class.is-on]="tok.lead"
+                                 [attr.data-lead]="tok.lead ? '' : null" />{{ ' ' }}
+            }
+            @case ('break') {
+              <br />
+            }
+            @case ('link') {
+              <a class="ul" [class.ul--soft]="tok.trailing" [href]="tok.href" [attr.target]="tok.external ? '_blank' : null"
+                 [attr.rel]="tok.external ? 'noopener noreferrer' : null">@for (w of tok.words; track $index; let last = $last) {@if (last && tok.trailing; as obj) {<span class="nw"><span class="w" data-w>{{ w }}</span><app-inline-object [kind]="obj.object" [label]="obj.label" /></span>} @else {<span class="w" data-w>{{ w }}</span> {{ ' ' }} }}@if (tok.note) {<span class="sr-only"> {{ tok.note }}</span>}</a>{{ ' ' }}
+            }
+            @case ('work') {
+              <a class="ul" href="?work=open" (click)="openWork($event)">@for (w of tok.words; track $index; let last = $last) {<span class="w" data-w>{{ w }}</span>@if (!last) { {{ ' ' }} }}</a>{{ ' ' }}
+            }
+            @case ('project') {
+              <a class="proj" [href]="'?work=open#' + tok.project!.slug" (click)="openWork($event, tok.project!.slug)"
+                 [attr.aria-label]="'View ' + tok.project!.name + ' in our work'"><span class="nw"><app-client-logo class="proj__logo"
+                 data-w [project]="tok.project!" /><span class="w" data-w>{{ tok.words[0] }}</span></span>@for (w of tok.words.slice(1); track $index) { {{ ' ' }}<span class="w" data-w>{{ w }}</span>}</a>@if (tok.suffix) {<span class="w" data-w>{{ tok.suffix }}</span>}{{ ' ' }}
+            }
+          }
+        }
+      </p>
+    </section>
+    @if (p.showcase) {
+      <app-showcase-reel class="reel" />
+    }
+  }
+</div>

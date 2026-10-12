@@ -1,0 +1,20 @@
+:host { display: block; }
+
+/* One narrow reading column for header, text and footer (reference layout). */
+.home {
+  width: min(var(--col), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  padding-top: 1.8rem;
+  padding-bottom: 5.5rem;
+  animation: view-enter 700ms var(--ease-out) both;
+}
+
+/* The opening line sits well down the first screen, not at the top. */
+.home__main { padding-top: clamp(7rem, 16.8vh, 10rem); }
+
+@media (min-width: 640px) {
+  .home { padding-top: 3.75rem; }
+  .home__main { padding-top: clamp(9rem, 28vh, 16rem); }
+}
+
+.home__footer { margin-top: clamp(10rem, 30vh, 17.5rem); }

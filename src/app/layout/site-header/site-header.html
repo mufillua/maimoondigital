@@ -1,0 +1,29 @@
+<header class="header">
+  <a class="brand" href="/" (click)="toTop($event)" [attr.aria-label]="site.name + ', back to top'">
+    <app-brand-mark />
+    <span class="brand__word">{{ site.wordmark }}</span>
+  </a>
+
+  <nav class="nav" aria-label="Main">
+    <ul class="nav__pill">
+      @for (item of nav; track item.label; let first = $first) {
+        <li>
+          <a [href]="href(item)" (click)="go($event, item)" [class.is-primary]="first">{{ item.label }}</a>
+        </li>
+      }
+    </ul>
+
+    <div class="nav__compact">
+      <button type="button" class="nav__toggle" [attr.aria-expanded]="menuOpen()" aria-controls="compact-menu"
+              (click)="menuOpen.set(!menuOpen())">
+        Menu
+        <span class="nav__chev" aria-hidden="true"></span>
+      </button>
+      <ul id="compact-menu" class="nav__menu" [class.is-open]="menuOpen()">
+        @for (item of nav; track item.label) {
+          <li><a [href]="href(item)" (click)="go($event, item)" [attr.tabindex]="menuOpen() ? null : -1">{{ item.label }}</a></li>
+        }
+      </ul>
+    </div>
+  </nav>
+</header>

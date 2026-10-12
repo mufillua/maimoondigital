@@ -1,0 +1,38 @@
+:host { display: block; }
+
+.footer {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 420;
+  letter-spacing: -0.005em;
+  color: var(--c-muted);
+
+  p { margin: 0; }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: color var(--t-hover) var(--ease-out);
+
+    @media (hover: hover) {
+      &:hover { color: var(--c-ink); }
+    }
+  }
+}
+
+.ico {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: 0 0.25em 0 0.1em;
+  vertical-align: -0.13em;
+
+  app-brand-mark {
+    width: 100%;
+    height: 100%;
+    color: var(--c-muted);
+  }
+}
+
+.sep { margin: 0 0.35em; color: var(--c-faint); }

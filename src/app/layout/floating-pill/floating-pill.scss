@@ -1,0 +1,106 @@
+:host { display: contents; }
+
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: max(1.75rem, calc(env(safe-area-inset-bottom) + 0.75rem));
+  z-index: 50;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.pill {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  height: 2.625rem;
+  padding: 0 0.4375rem 0 1.125rem;
+  border-radius: 999px;
+  background: var(--c-pill);
+  color: var(--c-pill-ink);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: pill-in 520ms var(--ease-out) both;
+  transition: transform var(--t-hover) var(--ease-out), box-shadow var(--t-hover) var(--ease-out);
+}
+
+@keyframes pill-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+.pill--home {
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+      .pill__btn { transform: rotate(90deg); }
+    }
+  }
+}
+
+.pill--work { padding-left: 0.5rem; gap: 0.5rem; }
+
+.pill__btn,
+.pill__close {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #3a3a3a;
+  color: #e9e9e9;
+  transition: transform 300ms var(--ease-out), background-color var(--t-hover);
+
+  svg { width: 0.75rem; height: 0.75rem; }
+}
+
+.pill__close {
+  background: transparent;
+  color: #bdbdbd;
+  width: 2rem;
+  height: 2rem;
+
+  @media (hover: hover) {
+    &:hover { background: #3a3a3a; color: #fff; }
+  }
+}
+
+.pill__icon {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.45rem;
+  background: #3a3a3a;
+  color: #d9d9d9;
+
+  svg { width: 0.95rem; height: 0.95rem; }
+}
+
+.pill__text {
+  display: inline-block;
+  min-width: 0;
+  max-width: 62vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The label and icon change with a short roll whenever new media comes on screen. */
+.pill__label { display: inline-grid; overflow: hidden; }
+
+.pill__swap {
+  display: inline-grid;
+  place-items: center;
+  animation: swap-in 420ms var(--ease-out) both;
+}
+
+@keyframes swap-in {
+  from { opacity: 0; filter: blur(4px); transform: translateY(70%); }
+  to { opacity: 1; filter: none; transform: none; }
+}

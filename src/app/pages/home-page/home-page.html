@@ -1,0 +1,17 @@
+<a class="skip-link" href="#main">Skip to content</a>
+
+@if (isWork()) {
+  <main id="main">
+    <app-work-view />
+  </main>
+  <app-floating-pill mode="work" />
+} @else {
+  <div class="home" id="top">
+    <app-site-header class="home__header" />
+    <main id="main" class="home__main">
+      <app-home-stack />
+    </main>
+    <app-site-footer class="home__footer" />
+  </div>
+  <app-floating-pill mode="home" />
+}

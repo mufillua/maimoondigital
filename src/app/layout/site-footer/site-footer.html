@@ -1,0 +1,30 @@
+<footer class="footer">
+  <p>
+    Designed and built by
+    <span class="ico"><app-brand-mark /></span>{{ site.founder }}.
+  </p>
+  <p>
+    Drop us a line at
+    <a [href]="contact.emailHref"><svg class="ico ico--line" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.75" y="3.25" width="12.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 4.5 8 8.75l5.5-4.25" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>{{ contact.email }}</a>.
+  </p>
+  <p>
+    <a [href]="contact.phoneHref">Call</a> or
+    <a [href]="contact.whatsappHref" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a [href]="contact.phoneHref"><svg class="ico ico--line" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="4.25" y="1.75" width="7.5" height="12.5" rx="1.9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M7 12h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>{{ contact.phoneDisplay }}</a>.
+  </p>
+  <p>
+    Follow along on
+    <a [href]="site.social.instagram" target="_blank" rel="noopener noreferrer"><svg class="ico ico--line" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2" y="2" width="12" height="12" rx="3.6" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="2.8" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="11.6" cy="4.5" r=".85" fill="currentColor"/></svg>Instagram<span class="sr-only"> (opens in a new tab)</span></a>.
+  </p>
+  <p>
+    <span class="sr-only">Site navigation: </span>See our
+    @for (item of nav; track item.label; let last = $last; let i = $index) {
+      <a [href]="item.opensWork ? '?work=open' : '#' + item.fragment" (click)="go($event, item)">{{ item.label.toLowerCase() }}</a>@if (i === nav.length - 2) { or } @else if (!last) {, }
+    }.
+  </p>
+  <p>
+    &copy; {{ site.name }} {{ year }}
+    <span class="sep" aria-hidden="true">·</span>
+    <a href="#top" (click)="toTop($event)">Back to top</a>
+  </p>
+</footer>

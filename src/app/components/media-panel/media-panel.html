@@ -1,0 +1,60 @@
+@let p = project();
+@let s = slot();
+
+<a class="frame" [class.frame--phone]="s.kind === 'mobile'" [href]="p.url" target="_blank" rel="noopener noreferrer"
+   [attr.aria-label]="s.alt + ' — opens ' + p.displayUrl + ' in a new tab'">
+  @if (showImage()) {
+    <img [src]="src()" [alt]="s.alt" loading="lazy" decoding="async" [class.is-loaded]="loaded()"
+         (load)="loaded.set(true)" (error)="failed.set(true)" />
+  } @else {
+    <!-- Preview card built from the live site's real details. -->
+    <div class="card" aria-hidden="true">
+      @if (s.kind !== 'mobile') {
+        <div class="chrome">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="addr">{{ p.displayUrl }}</span>
+        </div>
+      }
+
+      @switch (s.kind) {
+        @case ('desktop') {
+          <div class="hero">
+            <div class="topbar">
+              <span class="topbar__name">{{ p.name }}</span>
+              <span class="topbar__links"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <div class="hero__body">
+              <span class="eyebrow">{{ p.sector }}</span>
+              <span class="tagline">{{ p.tagline }}</span>
+            </div>
+          </div>
+        }
+        @case ('catalogue') {
+          <div class="cat">
+            <div class="cat__head">
+              <span class="cat__name">{{ p.name }}</span>
+              <span class="cat__title">Products</span>
+            </div>
+            <div class="cat__grid">
+              @for (c of p.categories.slice(0, 6); track c) {
+                <span class="tile"><i></i><b>{{ c }}</b></span>
+              }
+            </div>
+          </div>
+        }
+        @case ('mobile') {
+          <div class="phone">
+            <span class="phone__notch"></span>
+            <span class="phone__name">{{ p.name }}</span>
+            <span class="phone__tag">{{ p.tagline }}</span>
+            <span class="phone__list">
+              @for (c of p.categories.slice(0, 4); track c) {
+                <span>{{ c }}</span>
+              }
+            </span>
+          </div>
+        }
+      }
+    </div>
+  }
+</a>

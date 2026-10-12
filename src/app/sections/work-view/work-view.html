@@ -1,0 +1,82 @@
+<h1 class="sr-only">Selected work</h1>
+
+<!-- Fixed rail (desktop). Shows the intro until a project reaches the middle of the screen. -->
+<aside class="rail" aria-hidden="true">
+  @if (activeProject(); as active) {
+    @for (p of [active]; track p.slug) {
+      <div class="rail__inner">
+        <p class="rail__name"><app-client-logo class="logo" [project]="p" />{{ p.name }}</p>
+        <p class="rail__summary">{{ p.summary }}</p>
+        <ul class="rail__meta">
+          <li>{{ p.sector }}</li>
+          <li>{{ p.scope }}</li>
+          <li>{{ p.stack }}</li>
+          <li><a [href]="p.url" target="_blank" rel="noopener noreferrer" tabindex="-1">{{ p.displayUrl }}<span class="arrow">↗</span></a></li>
+        </ul>
+      </div>
+    }
+  } @else {
+    <div class="rail__inner">
+      <p class="intro"><span class="intro__lead">Selected work.</span><br />Live websites designed and built<br />for four industrial businesses.<br />Visit any of them to see it in use.</p>
+    </div>
+  }
+</aside>
+
+<div class="column">
+  <p class="intro intro--inline">
+    <span class="intro__lead">Selected work.</span>
+    Live websites designed and built for four industrial businesses. Visit any of them to see it in use.
+  </p>
+
+  <!-- Showreel: fills the first screen with all four clients, as the reference opens on its showreel. -->
+  <section class="showreel" data-showreel aria-labelledby="showreel-title">
+    <div class="showreel__top">
+      <h2 class="showreel__title" id="showreel-title">Four live websites</h2>
+      <span class="showreel__tag">Design + Build</span>
+    </div>
+    <ul class="showreel__grid">
+      @for (p of projects; track p.slug; let i = $index) {
+        <li class="sr" [style.--i]="i">
+          <a class="sr__link" [href]="'?work=open#' + p.slug" (click)="scrollToProject($event, p.slug)">
+            <span class="sr__float"><app-client-logo class="sr__logo" [project]="p" /></span>
+            <span class="sr__name">{{ p.name }}</span>
+            <span class="sr__sector">{{ p.sector }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+    <p class="showreel__hint" aria-hidden="true">Scroll to see each site <span class="showreel__arrow">↓</span></p>
+  </section>
+
+  @for (p of projects; track p.slug) {
+    <article class="project" [id]="p.slug" [attr.aria-labelledby]="p.slug + '-title'">
+      <header class="info">
+        <h2 class="info__name" [id]="p.slug + '-title'">
+          <app-client-logo class="logo" [project]="p" />{{ p.name }}
+        </h2>
+        <p class="info__summary">{{ p.summary }}</p>
+        <ul class="info__meta">
+          <li>{{ p.sector }}</li>
+          <li>{{ p.scope }}</li>
+          <li>{{ p.stack }}</li>
+          <li><a [href]="p.url" target="_blank" rel="noopener noreferrer">{{ p.displayUrl }}<span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+        </ul>
+      </header>
+
+      <div class="media">
+        @for (slot of p.media; track slot.kind; let i = $index) {
+          <app-media-panel data-media [attr.data-project]="p.slug" [attr.data-index]="i" [project]="p" [slot]="slot" />
+        }
+      </div>
+    </article>
+  }
+
+  <footer class="end">
+    <p class="intro">
+      <span class="intro__lead">Have a project in mind?</span><br />
+      Message on <a [href]="contact.whatsappHref" target="_blank" rel="noopener noreferrer">WhatsApp</a>,
+      call <a [href]="contact.phoneHref">{{ contact.phoneDisplay }}</a>
+      or write to <a [href]="contact.emailHref">{{ contact.email }}</a>.
+    </p>
+  </footer>
+</div>

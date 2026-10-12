@@ -1,0 +1,35 @@
+@if (still()) {
+  <!-- Reduced motion: all four logos at once, nothing cycling. -->
+  <div class="grid">
+    @for (p of projects; track p.slug) {
+      <a class="grid__item" [href]="'?work=open#' + p.slug" (click)="open($event, p.slug)">
+        <app-client-logo [project]="p" class="grid__logo" />
+        <span>{{ p.name }}</span>
+      </a>
+    }
+  </div>
+} @else {
+  <div class="stage" role="group" aria-roledescription="carousel" aria-label="Client websites">
+    @for (p of projects; track p.slug; let i = $index) {
+      <a class="scene" [class.is-active]="i === index()" [href]="'?work=open#' + p.slug" (click)="open($event, p.slug)"
+         [attr.aria-hidden]="i === index() ? null : 'true'" [attr.tabindex]="i === index() ? null : -1"
+         [style.--surface]="p.brand.surface" [style.--accent]="p.brand.accent">
+        <span class="scene__glow" aria-hidden="true"></span>
+        <span class="scene__ring" aria-hidden="true"></span>
+        <app-client-logo [project]="p" class="scene__logo" />
+        <span class="scene__cap">
+          <b>{{ p.name }}</b>
+          <span>{{ p.displayUrl }}</span>
+        </span>
+      </a>
+    }
+  </div>
+  <div class="segs">
+    @for (p of projects; track p.slug; let i = $index) {
+      <button type="button" class="seg" [class.is-done]="i < index()" [class.is-active]="i === index()"
+              (click)="go(i)" [attr.aria-label]="'Show ' + p.name" [attr.aria-current]="i === index() ? 'true' : null">
+        <i></i>
+      </button>
+    }
+  </div>
+}
