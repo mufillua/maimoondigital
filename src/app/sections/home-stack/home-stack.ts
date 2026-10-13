@@ -13,6 +13,8 @@ interface Token {
   type: 'words' | 'styled' | 'object' | 'break' | 'link' | 'project' | 'work';
   words: string[];
   text?: string;
+  /** Letters of an outline word, so each can hollow out in turn. */
+  chars?: string[];
   lead?: boolean;
   variant?: StyledVariant;
   object?: InlineObject;
@@ -63,7 +65,13 @@ function toView(p: Paragraph): ParagraphView {
       case 'text':
         return { type: 'words', words: words(s.text), lead: s.lead };
       case 'styled':
-        return { type: 'styled', words: [], text: s.text, variant: s.variant };
+        return {
+          type: 'styled',
+          words: [],
+          text: s.text,
+          variant: s.variant,
+          chars: s.variant === 'outline' ? Array.from(s.text) : undefined,
+        };
       case 'object':
         return { type: 'object', words: [], object: s.object, label: s.label, lead: s.lead };
       case 'break':

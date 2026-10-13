@@ -178,13 +178,70 @@
   .styled--brand.is-on .styled__text { --ink: 0%; animation: none; }
 }
 
-/* Outlined letters. */
-.styled--outline .styled__text {
-  color: transparent;
-  -webkit-text-stroke: 0.03em var(--c-pending);
-  transition: -webkit-text-stroke-color var(--t-reveal) var(--ease-out);
+/* "Website design." — matched frame by frame to reboot.studio's "Design.":
+   the word turns black like the rest, faint design-tool guide lines draw
+   in around it, then the letters empty out one by one, left to right,
+   leaving only their outlines inside the guide box. */
+.styled--outline { position: relative; }
+
+.styled--outline .ch {
+  -webkit-text-stroke: max(1px, 0.034em) transparent;
 }
-.styled--outline.is-on .styled__text { -webkit-text-stroke-color: var(--c-ink); }
+
+.styled--outline.is-on .ch {
+  animation: hollow 420ms var(--ease-out) both;
+  animation-delay: calc(560ms + var(--k) * 65ms);
+}
+
+@keyframes hollow {
+  0% { color: var(--c-ink); -webkit-text-stroke-color: transparent; }
+  35% { color: #bdbdbd; -webkit-text-stroke-color: var(--c-ink); }
+  100% { color: transparent; -webkit-text-stroke-color: var(--c-ink); }
+}
+
+/* Guide lines: top just above the tallest marks (the i-dots), bottom just
+   under the descenders, one at each side; they run past each other at the
+   corners. The insets were measured in the browser so the lines clear the
+   outlined letters by ~0.08em at every screen size. */
+.guides {
+  position: absolute;
+  inset: 0.1em -0.08em -0.14em -0.06em;
+  pointer-events: none;
+}
+
+.g {
+  position: absolute;
+  background: #e4e4e4;
+  transition: transform 520ms var(--ease-out);
+}
+
+.g--t,
+.g--b {
+  left: -0.38em;
+  right: -0.38em;
+  height: 1px;
+  transform: scaleX(0);
+}
+
+.g--t { top: 0; transform-origin: right center; }
+.g--b { bottom: 0; transform-origin: left center; }
+
+.g--l,
+.g--r {
+  top: -0.38em;
+  bottom: -0.38em;
+  width: 1px;
+  transform: scaleY(0);
+}
+
+.g--l { left: 0; transform-origin: center top; }
+.g--r { right: 0; transform-origin: center bottom; }
+
+.styled--outline.is-on .g { transform: none; }
+.styled--outline.is-on .g--t { transition-delay: 160ms; }
+.styled--outline.is-on .g--r { transition-delay: 230ms; }
+.styled--outline.is-on .g--b { transition-delay: 300ms; }
+.styled--outline.is-on .g--l { transition-delay: 370ms; }
 
 /* Code-like, typed out letter by letter when it is reached. */
 .styled--mono .styled__text {

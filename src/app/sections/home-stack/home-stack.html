@@ -24,7 +24,13 @@
             }
             @case ('styled') {
               <span [class]="'styled styled--' + tok.variant" data-w [style.--n]="tok.text!.length">
-                <span class="styled__text">{{ tok.text }}</span>
+                @if (tok.chars) {
+                  <span class="sr-only">{{ tok.text }}</span>
+                  <span class="styled__text" aria-hidden="true">@for (ch of tok.chars; track $index) {<span class="ch" [style.--k]="$index">{{ ch }}</span>}</span>
+                  <span class="guides" aria-hidden="true"><i class="g g--t"></i><i class="g g--b"></i><i class="g g--l"></i><i class="g g--r"></i></span>
+                } @else {
+                  <span class="styled__text">{{ tok.text }}</span>
+                }
                 @if (tok.variant === 'select') {
                   <span class="handles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
                   <span class="dims" aria-hidden="true" appMeasure></span>
