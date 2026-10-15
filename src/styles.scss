@@ -41,6 +41,10 @@
   --gutter: 1.5rem;            /* 24px mobile side gutter */
   --para-gap: var(--lh-lead);
 
+  /* Wallpaper */
+  --doodle-opacity: 0.085;
+  --doodle-size: 640px;
+
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -50,6 +54,15 @@
 
 @media (min-width: 640px) {
   :root { --gutter: 3rem; }
+}
+
+/* Smaller doodles on phones, like a chat wallpaper on a phone screen.
+   The text spans the whole width there, so the wallpaper is lighter
+   overall instead of softened behind a column. */
+@media (max-width: 639.98px) {
+  :root { --doodle-size: 460px; --doodle-opacity: 0.055; }
+  body::before,
+  app-doodle-wall { -webkit-mask-image: none; mask-image: none; }
 }
 
 *,
@@ -69,7 +82,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--c-bg);
+  /* Transparent so the doodle wallpaper (body::before) shows through;
+     the white comes from html, which paints the canvas. */
+  background: transparent;
   color: var(--c-ink);
   font-family: var(--font-sans);
   font-feature-settings: 'cv11', 'ss01';
@@ -78,6 +93,57 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
+
+/* WhatsApp-style doodle wallpaper on a web-design theme
+   (public/bg/doodles.svg — an original, seamless 640px tile).
+   Fixed behind the page like a chat wallpaper, and kept faint so the
+   text stays easy to read. Tune with --doodle-opacity / --doodle-size. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url('/bg/doodles.svg') 0 0 / var(--doodle-size) var(--doodle-size) repeat;
+  opacity: var(--doodle-opacity);
+  pointer-events: none;
+  /* Full strength in the margins, softer behind the reading column so the
+     words (especially the grey, not-yet-revealed ones) stay crisp. */
+  --calm: rgba(0, 0, 0, 0.4);
+  -webkit-mask-image: linear-gradient(90deg,
+    #000 0, #000 calc(50% - var(--col) / 2 - 6rem),
+    var(--calm) calc(50% - var(--col) / 2 + 1rem),
+    var(--calm) calc(50% + var(--col) / 2 - 1rem),
+    #000 calc(50% + var(--col) / 2 + 6rem), #000 100%);
+  mask-image: linear-gradient(90deg,
+    #000 0, #000 calc(50% - var(--col) / 2 - 6rem),
+    var(--calm) calc(50% - var(--col) / 2 + 1rem),
+    var(--calm) calc(50% + var(--col) / 2 - 1rem),
+    #000 calc(50% + var(--col) / 2 + 6rem), #000 100%);
+}
+
+/* The live, animated version of the same wallpaper
+   (components/doodle-wall). It draws the identical layout on a canvas,
+   then hides the static image above. Same softening behind the column. */
+app-doodle-wall {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  pointer-events: none;
+  contain: strict;
+  --calm: rgba(0, 0, 0, 0.4);
+  -webkit-mask-image: linear-gradient(90deg,
+    #000 0, #000 calc(50% - var(--col) / 2 - 6rem),
+    var(--calm) calc(50% - var(--col) / 2 + 1rem),
+    var(--calm) calc(50% + var(--col) / 2 - 1rem),
+    #000 calc(50% + var(--col) / 2 + 6rem), #000 100%);
+  mask-image: linear-gradient(90deg,
+    #000 0, #000 calc(50% - var(--col) / 2 - 6rem),
+    var(--calm) calc(50% - var(--col) / 2 + 1rem),
+    var(--calm) calc(50% + var(--col) / 2 - 1rem),
+    #000 calc(50% + var(--col) / 2 + 6rem), #000 100%);
+}
+html.doodles-live body::before { visibility: hidden; }
 
 img, svg, video { display: block; max-width: 100%; }
 
@@ -90,6 +156,15 @@ button {
   border: 0;
   padding: 0;
   cursor: pointer;
+}
+
+/* Custom cursor: a black arrow (public/cursor.svg), slightly larger over
+   links and buttons (public/cursor-link.svg). Falls back to the system
+   cursor if the image can't load. Touch screens never show it. */
+html { cursor: url('/cursor.svg') 4 4, auto; }
+*, *::before, *::after { cursor: inherit; }
+a[href], button, [role='button'], summary, label[for], select {
+  cursor: url('/cursor-link.svg') 5 5, pointer;
 }
 
 :focus-visible {

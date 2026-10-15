@@ -101,6 +101,59 @@ The image fades in over the card. If a file is missing, the card stays.
 | Work view opening | A showreel panel with all four client logos rises in one by one, each drifting gently on a faint dot grid; clicking one glides down to that project. |
 | Work panels | Blur and fade in as they arrive; the project panel on the left swaps with its logo landing. |
 
+## Background wallpaper
+
+The page has a faint doodle wallpaper, like a chat app's, made of about 90
+original web-design line icons (cursors, browser windows, `</>`, pen tools,
+phones, gears, rockets, toggles and more). It is fixed behind the page, so it
+stays put while the text scrolls.
+
+**It moves.** `src/app/components/doodle-wall` draws the wallpaper on a canvas
+so that:
+
+- about a third of the doodles play a small loop that suits them: the gear and
+  sun turn, the loading spinner ticks, the bell and price tag swing, the heart
+  beats, the bulb glows, stars twinkle, the rocket hovers, the paper plane flies
+  off and comes back, the map pin and download arrow bounce, the cursor, hand,
+  thumbs-up and button tap, the toggle switches on and off, the wifi bars fill
+  up, the eye blinks and a few tools wiggle;
+- on computers with a mouse, doodles near the pointer drift away from it, tilt
+  and darken, then ease back. A click makes them hop further.
+
+Doodles at rest are kept in a cached layer and only the moving ones are redrawn,
+at 30 frames a second when the mouse is still. The animation stops when the tab
+is hidden. Visitors whose device asks for reduced motion see the still image.
+
+Files:
+
+| File | What it is |
+| --- | --- |
+| `public/bg/doodles.svg` | The still wallpaper: shown first while the page loads, and for reduced motion. |
+| `public/bg/doodles.json` | The same layout as data, used by the animated version. |
+| `tools/make_doodles.py` | Makes both files. Run `python3 tools/make_doodles.py public/bg/doodles.svg 640 11 "#12305e"`. |
+
+Which doodles move, and how, is the `ANIMS` list at the top of `doodle-wall.ts`.
+The reach of the mouse effect is `REACH`.
+
+Tune the look in `src/styles.scss`:
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| `--doodle-opacity` | `0.085` (phones `0.055`) | How strong the doodles are. Try `0.05` for subtler, `0.12` for bolder. |
+| `--doodle-size` | `640px` (phones `460px`) | Tile size. Smaller means smaller, denser doodles. |
+
+On desktop the doodles are softer behind the text column and full strength in
+the side margins, so the grey, not-yet-revealed words stay easy to read.
+To remove the wallpaper, delete `<app-doodle-wall />` from `src/app/app.ts` and
+the `body::before` rule.
+
+## Cursor
+
+The mouse pointer is a black arrow with a white edge (`public/cursor.svg`),
+and a slightly bigger one over links and buttons (`public/cursor-link.svg`).
+If an image can't load, the browser's normal cursor is used. The rules are
+under "Custom cursor" in `src/styles.scss`.
+
 ## Accessibility and motion
 
 - With `prefers-reduced-motion`, all text shows solid black, the icons stop

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DoodleWall } from './components/doodle-wall/doodle-wall';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, DoodleWall],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<router-outlet />',
+  template: '<app-doodle-wall /><router-outlet />',
 })
 export class App {}
