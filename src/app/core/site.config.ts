@@ -179,8 +179,8 @@ export const PROJECTS: Project[] = [
     slug: 'burhani-seal-centre',
     number: '04',
     name: 'Burhani Seal Centre',
-    url: 'https://burhani-seal-centre.vercel.app/',
-    displayUrl: 'burhani-seal-centre.vercel.app',
+    url: 'https://burhanisealcentre.vercel.app/',
+    displayUrl: 'burhanisealcentre.vercel.app',
     summary:
       'Website for a Kolkata industrial sealing business — oil seals, hydraulic seals, coupling spiders and more.',
     sector: 'Industrial sealing',
