@@ -190,14 +190,14 @@ export const PROJECTS: Project[] = [
     categories: [
       'Oil seals',
       'Hydraulic seals',
+      'Seal kits',
       'PU coupling spiders',
-      'Pump seals',
       'O-ring kits',
-      'Ball bearings',
+      'SKF bearings',
     ],
     logo: 'work/burhani-seal-centre/logo.webp',
-    logoStyle: 'full',
-    brand: { surface: '#181824', ink: '#f1e3b8', accent: '#d8b454' },
+    logoStyle: 'tile',
+    brand: { surface: '#0155b1', ink: '#ffffff', accent: '#0a2a5c' },
     media: [
       { kind: 'desktop', label: 'Burhani Seal Centre site', alt: 'Burhani Seal Centre homepage' },
       { kind: 'catalogue', label: 'Product range', alt: 'Burhani Seal Centre product range' },
