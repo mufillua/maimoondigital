@@ -81,7 +81,7 @@ const WHATSAPP_MESSAGE =
 export const SITE_URL = 'https://maimoon.digital';
 
 /** The page title used in search results (kept to ~60 characters). */
-export const SITE_TITLE = 'Maimoon Digital | Website Design & Development in Kolkata';
+export const SITE_TITLE = 'Maimoon Digital | Websites that move businesses forward';
 
 export const SITE = {
   name: 'Maimoon Digital',
