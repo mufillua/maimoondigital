@@ -9,7 +9,7 @@ import { PROJECTS, SITE, SITE_TITLE, SITE_URL } from './site.config';
 
 /** Shown under the title in search results (kept to ~155 characters). */
 export const META_DESCRIPTION =
-  'Websites that move businesses forward. Product catalogues, WhatsApp enquiries and phone-first builds by Mufaddal Maimoon.';
+  'Website design and development for small and medium businesses in Kolkata. Product catalogues, WhatsApp enquiries and phone-first builds.';
 
 /** Title used when the link is shared (WhatsApp, LinkedIn, Instagram, X). */
 export const SHARE_TITLE = 'Maimoon Digital: websites that move businesses forward';
