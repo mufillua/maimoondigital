@@ -8,6 +8,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { ChatIconComponent } from '../../components/chat-icon/chat-icon';
 import { ClientLogoComponent } from '../../components/client-logo/client-logo';
 import { MediaPanelComponent } from '../../components/media-panel/media-panel';
 import { PROJECTS, SITE } from '../../core/site.config';
@@ -21,7 +22,7 @@ import { WorkStateService } from '../../core/work-state.service';
  */
 @Component({
   selector: 'app-work-view',
-  imports: [MediaPanelComponent, ClientLogoComponent],
+  imports: [MediaPanelComponent, ClientLogoComponent, ChatIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './work-view.html',
   styleUrl: './work-view.scss',

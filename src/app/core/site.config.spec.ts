@@ -22,6 +22,13 @@ describe('site config', () => {
     ]);
   });
 
+  it('marks the two sites that have an on-site chatbot', () => {
+    expect(PROJECTS.filter((p) => p.chatbot).map((p) => [p.slug, p.chatbot!.name])).toEqual([
+      ['western-hardware-mart', 'Hydra'],
+      ['steel-tools-india', 'Sidekick'],
+    ]);
+  });
+
   it('gives every media slot a label and alt text, and only points at /work images', () => {
     for (const p of PROJECTS) {
       expect(new Set(PROJECTS.map((x) => x.slug)).size).toBe(PROJECTS.length);

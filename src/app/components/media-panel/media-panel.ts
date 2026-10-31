@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { MediaSlot, Project } from '../../core/site.config';
+import { ChatIconComponent } from '../chat-icon/chat-icon';
 
 /**
  * One media item of a project, sitting on a soft grey panel as in the
@@ -9,6 +10,7 @@ import { MediaSlot, Project } from '../../core/site.config';
  */
 @Component({
   selector: 'app-media-panel',
+  imports: [ChatIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': '"panel panel--" + slot().kind',

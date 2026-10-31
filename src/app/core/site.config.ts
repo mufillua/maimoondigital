@@ -62,14 +62,33 @@ export interface Project {
   logoStyle: 'tile' | 'full';
   brand: ProjectBrand;
   media: MediaSlot[];
+  /** The on-site chatbot, for sites that have one. */
+  chatbot?: ProjectChatbot;
+}
+
+export interface ProjectChatbot {
+  /** The chatbot's name on the client's site. */
+  name: string;
+  /** One line for the work view, shown after "Includes {name},". */
+  blurb: string;
 }
 
 const WHATSAPP_NUMBER = '919073053864';
 const WHATSAPP_MESSAGE =
   "Hi Mufaddal, I'd like to discuss a website for my business.";
 
+/** Production address. Canonical URL, social tags, sitemap and JSON-LD all use it. */
+export const SITE_URL = 'https://maimoon.digital';
+
+/** The page title used in search results (kept to ~60 characters). */
+export const SITE_TITLE = 'Maimoon Digital | Website Design & Development in Kolkata';
+
 export const SITE = {
   name: 'Maimoon Digital',
+  url: SITE_URL,
+  city: 'Kolkata',
+  region: 'West Bengal',
+  country: 'IN',
   wordmark: 'maimoon digital',
   founder: 'Mufaddal Maimoon',
   founderRole: 'Founder, Maimoon Digital',
@@ -118,6 +137,7 @@ export const PROJECTS: Project[] = [
     logo: 'work/western-hardware-mart/logo.webp',
     logoStyle: 'tile',
     brand: { surface: '#0e6690', ink: '#ffffff', accent: '#3c0c84' },
+    chatbot: { name: 'Hydra', blurb: 'an on-site chatbot that answers product questions from the catalogue.' },
     media: [
       { kind: 'desktop', label: 'Western Hardware Mart site', alt: 'Western Hardware Mart homepage' },
       { kind: 'catalogue', label: 'Product catalogue', alt: 'Western Hardware Mart product catalogue' },
@@ -147,6 +167,7 @@ export const PROJECTS: Project[] = [
     logo: 'work/steel-tools-india/logo.webp',
     logoStyle: 'tile',
     brand: { surface: '#245490', ink: '#ffffff', accent: '#d8303c' },
+    chatbot: { name: 'Sidekick', blurb: 'an on-site chatbot that answers product questions from the catalogue.' },
     media: [
       { kind: 'desktop', label: 'Steel Tools India site', alt: 'Steel Tools India homepage' },
       { kind: 'catalogue', label: 'Product catalogue', alt: 'Steel Tools India product catalogue' },

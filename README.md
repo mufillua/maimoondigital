@@ -20,7 +20,33 @@ optional peer dependencies. Delete it if your npm installs cleanly without it.
 The build output is plain static files. Deploy `dist/maimoon-digital/browser`
 to any static host (Vercel, Netlify, Firebase, Hostinger). No server is needed,
 and no rewrites are needed either, because the site is a single page: the work
-view is `/?work=open`.
+view is `/?work=open`. `vercel.json` pins that folder as Vercel's output.
+
+## SEO
+
+The live address is **https://maimoon.digital** (`SITE_URL` in
+`src/app/core/site.config.ts`).
+
+- **Prerendered HTML.** `npm run build` renders the home page at build time
+  (`@angular/ssr`, `outputMode: "static"` in `angular.json`), so
+  `index.html` already contains every word of the page. Search engines and
+  link previews (WhatsApp, LinkedIn) no longer see an empty `<app-root>`. The
+  browser then takes over that HTML without redrawing it (hydration). A direct
+  visit to `/?work=open` shows the work view one frame after load.
+- **Head tags and JSON-LD** come from `src/app/core/seo.ts`: title,
+  description, canonical, Open Graph and Twitter tags, plus schema.org data for
+  the studio (ProfessionalService), its founder, the website and the page. They
+  are built from `site.config.ts` and the Services paragraph, so they always
+  match the page. `src/app/core/seo.spec.ts` checks lengths and values.
+- **Files in `public/`:** `robots.txt`, `sitemap.xml`, `og-image.png`
+  (1200×630 share image), app icons and `site.webmanifest`, and `404.html`
+  (Vercel serves it with a real 404 status for unknown paths).
+- **Speed:** the Latin Inter font is preloaded from `/fonts/` so the text
+  paints in Inter straight away with no layout shift, and the animated
+  wallpaper starts once the page is idle.
+
+Changing the domain later means editing `SITE_URL`, `public/robots.txt` and
+`public/sitemap.xml`.
 
 ## How the page works
 

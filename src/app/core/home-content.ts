@@ -35,7 +35,7 @@ export interface HomeLinks {
 export function homeParagraphs(links: HomeLinks): Paragraph[] {
   return [
     {
-      heading: 'Maimoon Digital',
+      heading: 'Maimoon Digital: website design and development',
       showcase: true,
       segments: [
         { kind: 'text', text: 'We build digital experiences that move businesses forward.', lead: true },

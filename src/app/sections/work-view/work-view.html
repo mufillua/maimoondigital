@@ -7,6 +7,9 @@
       <div class="rail__inner">
         <p class="rail__name"><app-client-logo class="logo" [project]="p" />{{ p.name }}</p>
         <p class="rail__summary">{{ p.summary }}</p>
+        @if (p.chatbot; as bot) {
+          <p class="bot"><span class="bot__ico"><app-chat-icon /></span><span>Includes <b>{{ bot.name }}</b>, {{ bot.blurb }}</span></p>
+        }
         <ul class="rail__meta">
           <li>{{ p.sector }}</li>
           <li>{{ p.scope }}</li>
@@ -55,6 +58,9 @@
           <app-client-logo class="logo" [project]="p" />{{ p.name }}
         </h2>
         <p class="info__summary">{{ p.summary }}</p>
+        @if (p.chatbot; as bot) {
+          <p class="bot"><span class="bot__ico"><app-chat-icon /></span><span>Includes <b>{{ bot.name }}</b>, {{ bot.blurb }}</span></p>
+        }
         <ul class="info__meta">
           <li>{{ p.sector }}</li>
           <li>{{ p.scope }}</li>

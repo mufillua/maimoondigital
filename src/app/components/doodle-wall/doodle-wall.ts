@@ -91,7 +91,15 @@ export class DoodleWall {
   constructor() {
     afterNextRender(() => {
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      void this.start();
+      // The static wallpaper is already on screen, so start the animated one
+      // only once the page has loaded and the browser is idle. This keeps it
+      // from competing with the first paint and the first tap.
+      const go = () =>
+        'requestIdleCallback' in window
+          ? requestIdleCallback(() => void this.start(), { timeout: 2500 })
+          : setTimeout(() => void this.start(), 300);
+      if (document.readyState === 'complete') go();
+      else addEventListener('load', go, { once: true });
     });
   }
 

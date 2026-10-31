@@ -8,7 +8,7 @@
          (load)="loaded.set(true)" (error)="failed.set(true)" />
   } @else {
     <!-- Preview card built from the live site's real details. -->
-    <div class="card" aria-hidden="true">
+    <div class="card" [class.card--bot]="!!p.chatbot" aria-hidden="true">
       @if (s.kind !== 'mobile') {
         <div class="chrome">
           <span class="dots"><i></i><i></i><i></i></span>
@@ -54,6 +54,16 @@
             </span>
           </div>
         }
+      }
+
+      @if (p.chatbot; as bot) {
+        <!-- The site's chatbot launcher, bottom-right as on the live site. -->
+        <span class="bot" [class.bot--phone]="s.kind === 'mobile'">
+          @if (s.kind !== 'catalogue') {
+            <span class="bot__hello">Ask {{ bot.name }}</span>
+          }
+          <span class="bot__btn"><app-chat-icon /></span>
+        </span>
       }
     </div>
   }
