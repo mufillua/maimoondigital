@@ -18,7 +18,7 @@ describe('site config', () => {
       'https://www.westernhardwaremart.com/',
       'https://steeltoolsindia.in/',
       'https://www.bhrubberproducts.com/',
-      'https://burhanisealcentre.vercel.app/',
+      'https://burhanisealcentre.in/',
     ]);
   });
 
