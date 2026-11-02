@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { InlineObject } from '../../core/home-content';
+import { DayNightComponent } from '../day-night/day-night';
 
 /**
  * Small illustrated objects that sit inside the running text, as on the
@@ -9,6 +10,7 @@ import { InlineObject } from '../../core/home-content';
  */
 @Component({
   selector: 'app-inline-object',
+  imports: [DayNightComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'data-w': '',
@@ -132,6 +134,12 @@ import { InlineObject } from '../../core/home-content';
           <path class="pc pc--dev glyph" d="M32 12.6 29.8 16l2.2 3.4M36.8 12.6 39 16l-2.2 3.4M35.3 12.1 33.5 19.9" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           <circle class="pc pc--design glyph" cx="13" cy="16" r="3" fill="none" stroke="#12305e" stroke-width="1.5" />
         </svg>
+      }
+      @case ('chat') {
+        <span class="chat"><span class="dots"><i></i><i></i><i></i></span></span>
+      }
+      @case ('dayNight') {
+        <app-day-night />
       }
       @case ('wave') {
         <span class="wave">👋</span>

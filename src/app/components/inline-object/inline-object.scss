@@ -373,3 +373,53 @@
   86% { transform: rotate(-4deg); }
   92% { transform: rotate(8deg); }
 }
+
+/* Chat bubble — a small chatbot "typing" after "for your website". */
+:host(.obj--chat) {
+  width: 1.6em;
+  height: 1.2em;
+  margin-top: -0.55em;
+  margin-bottom: -0.35em;
+}
+
+.chat {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.42em 0.42em 0.42em 0.12em;
+  background: #2a6df4;
+  box-shadow: 0 0.12em 0.24em rgba(42, 109, 244, 0.28);
+}
+
+.chat .dots {
+  display: flex;
+  gap: 0.12em;
+}
+
+.chat .dots i {
+  width: 0.17em;
+  height: 0.17em;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.55;
+}
+
+:host(.is-on) .chat .dots i { animation: chat-dot 1.4s var(--ease-in-out) infinite; }
+:host(.is-on) .chat .dots i:nth-child(2) { animation-delay: 140ms; }
+:host(.is-on) .chat .dots i:nth-child(3) { animation-delay: 280ms; }
+
+@keyframes chat-dot {
+  0%, 40%, 100% { transform: none; opacity: 0.55; }
+  20% { transform: translateY(-0.12em); opacity: 1; }
+}
+
+/* Day and night — the sun and moon take turns after "any time of day."
+   (drawn by the DayNight component). */
+:host(.obj--dayNight) {
+  width: 1.6em;
+  height: 1.2em;
+  margin-top: -0.55em;
+  margin-bottom: -0.35em;
+}

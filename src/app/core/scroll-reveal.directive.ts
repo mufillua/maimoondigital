@@ -20,7 +20,7 @@ interface Item {
 const LINE = 0.5;
 
 /** How many extra lines are revealed ahead of that point while scrolling. */
-const LEAD_LINES = 1.8;
+const LEAD_LINES = 2.5;
 
 /** Long enough for the opening word-by-word entrance to finish. */
 const ENTRANCE_MS = 2000;

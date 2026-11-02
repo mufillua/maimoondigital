@@ -4,7 +4,7 @@
  * words, styled words, inline objects and links can share one text flow.
  */
 
-export type InlineObject = 'appIcon' | 'monogram' | 'toggle' | 'wave' | 'devices' | 'sparkle' | 'globe' | 'designDev' | 'laptop' | 'puzzle';
+export type InlineObject = 'appIcon' | 'monogram' | 'toggle' | 'wave' | 'devices' | 'sparkle' | 'globe' | 'designDev' | 'laptop' | 'puzzle' | 'chat' | 'dayNight';
 
 export type StyledVariant = 'outline' | 'mono' | 'serif' | 'squeeze' | 'redo' | 'select' | 'selected' | 'brand';
 
@@ -94,6 +94,10 @@ export function homeParagraphs(links: HomeLinks): Paragraph[] {
         { kind: 'object', object: 'laptop' },
         { kind: 'text', text: 'with the care, clarity and speed your customers expect.' },
         { kind: 'object', object: 'toggle' },
+        { kind: 'text', text: 'We also design and develop personalised chatbots' },
+        { kind: 'object', object: 'chat' },
+        { kind: 'text', text: 'for your website that answer your customers, any time of day.' },
+        { kind: 'object', object: 'dayNight' },
       ],
     },
     {
