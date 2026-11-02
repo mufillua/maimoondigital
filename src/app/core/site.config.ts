@@ -104,6 +104,7 @@ export const SITE = {
   social: {
     linkedin: 'https://www.linkedin.com/in/mufimaimoon',
     instagram: 'https://www.instagram.com/mufimaimoon/',
+    companyLinkedin: 'https://www.linkedin.com/company/maimoondigital/',
   },
   nav: [
     { label: 'Work', opensWork: true },
