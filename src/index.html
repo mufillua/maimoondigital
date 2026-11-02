@@ -8,10 +8,13 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="preload" href="fonts/inter-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Description, canonical, Open Graph and JSON-LD are added at build time from src/app/core/seo.ts -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+  <!-- Favicons. Google Search reads PNG/ICO (multiples of 48px work best); browsers use the SVG. Keep these URLs stable. -->
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
   <app-root></app-root>

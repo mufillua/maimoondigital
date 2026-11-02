@@ -3,10 +3,10 @@ import { PROJECTS, SITE, SITE_TITLE, SITE_URL } from './site.config';
 
 describe('seo', () => {
   it('uses the production domain everywhere', () => {
-    expect(SITE_URL).toBe('https://maimoon.digital');
+    expect(SITE_URL).toBe('https://www.maimoon.digital');
     expect(JSON.stringify(headTags())).not.toContain('maimoondigital.vercel.app');
     const canonical = headTags().find((t) => t.attrs['rel'] === 'canonical');
-    expect(canonical?.attrs['href']).toBe('https://maimoon.digital/');
+    expect(canonical?.attrs['href']).toBe('https://www.maimoon.digital/');
   });
 
   it('keeps the title and description within search-result lengths', () => {

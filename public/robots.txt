@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maimoon.digital/sitemap.xml
+Sitemap: https://www.maimoon.digital/sitemap.xml

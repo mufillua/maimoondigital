@@ -78,7 +78,7 @@ const WHATSAPP_MESSAGE =
   "Hi Mufaddal, I'd like to discuss a website for my business.";
 
 /** Production address. Canonical URL, social tags, sitemap and JSON-LD all use it. */
-export const SITE_URL = 'https://maimoon.digital';
+export const SITE_URL = 'https://www.maimoon.digital';
 
 /** The page title used in search results (kept to ~60 characters). */
 export const SITE_TITLE = 'Maimoon Digital | Websites that move businesses forward';

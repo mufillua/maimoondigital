@@ -24,7 +24,7 @@ view is `/?work=open`. `vercel.json` pins that folder as Vercel's output.
 
 ## SEO
 
-The live address is **https://maimoon.digital** (`SITE_URL` in
+The live address is **https://www.maimoon.digital** (`SITE_URL` in
 `src/app/core/site.config.ts`).
 
 - **Prerendered HTML.** `npm run build` renders the home page at build time
@@ -44,6 +44,10 @@ The live address is **https://maimoon.digital** (`SITE_URL` in
 - **Speed:** the Latin Inter font is preloaded from `/fonts/` so the text
   paints in Inter straight away with no layout shift, and the animated
   wallpaper starts once the page is idle.
+
+Favicons: `public/favicon-48x48.png`, `favicon-96x96.png`, `favicon.ico` and
+`favicon.svg`. Google Search shows the PNG/ICO next to results (it can take a
+few days to weeks after a crawl); keep those file names unchanged.
 
 Changing the domain later means editing `SITE_URL`, `public/robots.txt` and
 `public/sitemap.xml`.

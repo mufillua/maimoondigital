@@ -121,6 +121,7 @@ export function structuredData(): object {
         '@id': id('website'),
         url: `${SITE_URL}/`,
         name: SITE.name,
+        alternateName: 'maimoon.digital',
         inLanguage: 'en',
         publisher: { '@id': id('business') },
       },
