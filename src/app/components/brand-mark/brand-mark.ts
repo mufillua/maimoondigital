@@ -42,11 +42,18 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
       to { stroke-dashoffset: 0; }
     }
 
-    /* On hover: the tile nudges forward and the M's middle dips, then springs back. */
+    /* On hover: the tile nudges forward and the M's middle dips, then springs back.
+       These rules must stay outside any @media block: Angular renames this
+       component's @keyframes in production builds, but not the animation names
+       used inside media queries, so a hover rule inside @media (hover: hover)
+       would point at a name that no longer exists on the live site. */
     .v { transform-box: fill-box; transform-origin: 50% 0; }
-    @media (hover: hover) {
-      :host-context(.brand:hover), :host-context(.brand-pin:hover) { animation: mark-nudge 720ms cubic-bezier(0.34, 1.56, 0.64, 1); }
-      :host-context(.brand:hover) .v, :host-context(.brand-pin:hover) .v { animation: mark-dip 720ms ease-out; }
+    :host-context(.brand:hover), :host-context(.brand-pin:hover) { animation: mark-nudge 720ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+    :host-context(.brand:hover) .v, :host-context(.brand-pin:hover) .v { animation: mark-dip 720ms ease-out; }
+    /* No hover on touch screens (a tap would leave it stuck in hover). */
+    @media (hover: none) {
+      :host-context(.brand:hover), :host-context(.brand-pin:hover),
+      :host-context(.brand:hover) .v, :host-context(.brand-pin:hover) .v { animation: none; }
     }
     @keyframes mark-nudge {
       0% { transform: none; }
