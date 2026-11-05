@@ -6,9 +6,12 @@ distance, and any icon near an edge is repeated on the opposite edge so the
 tile repeats without seams. Small dots, rings and plus signs fill the gaps,
 as in the WhatsApp wallpaper.
 
+v3 adds catalogue, shop, chat, chatbot, growth and a few Kolkata doodles
+(Howrah Bridge, a yellow taxi, a tram and a kulhad of chai).
+
 Usage: python3 make_doodles.py OUT.svg [tile_px] [seed] [stroke_colour]
 
-For this site: python3 tools/make_doodles.py public/bg/doodles.svg 640 11 "#12305e"
+For this site: python3 tools/make_doodles.py public/bg/doodles.svg 760 11 "#12305e"
 (writes public/bg/doodles.svg and public/bg/doodles.json together)
 """
 import math
@@ -20,6 +23,22 @@ OUT = sys.argv[1]
 TILE = int(sys.argv[2]) if len(sys.argv) > 2 else 640
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 7
 INK = sys.argv[4] if len(sys.argv) > 4 else '#12305e'
+
+
+def CLOCK(i):
+    """Clock face with the minute hand at one of 8 positions (the hour hand stays at 4)."""
+    a = math.radians(i * 45)
+    mx, my = 24 + 12 * math.sin(a), 24 - 12 * math.cos(a)
+    return (f'<circle cx="24" cy="24" r="17"/><path d="M24 24 {mx:.1f} {my:.1f}"/><path d="M24 24l5.5 3.5"/>'
+            '<circle cx="24" cy="24" r="1.6" fill="INK"/>')
+
+def CHAI(i):
+    """A kulhad of chai; the three steam wisps sit a little higher in each frame."""
+    cup = '<path d="M12 21h24l-3 17a4 4 0 0 1-4 3H19a4 4 0 0 1-4-3z"/><path d="M12 21c0 2 5 3 12 3s12-1 12-3"/>'
+    o = [0, -1.6, -3.2][i]
+    steam = ''.join(f'<path d="M{x} {16 + o:.1f}c-2-3 2-4 0-7"/>' for x in (19, 24, 29))
+    op = ['1', '.75', '.5'][i]
+    return cup + f'<g stroke-opacity="{op}">{steam}</g>'
 
 # --- Icons (48x48, stroke only unless noted) ------------------------------
 ICONS = {
@@ -140,6 +159,38 @@ ICONS = {
     'arrows': '<path d="M24 5v38M5 24h38M19 10l5-5 5 5M19 38l5 5 5-5M10 19l-5 5 5 5M38 19l5 5-5 5"/>',
     'cmd': '<path d="M18 18v-5a5 5 0 1 0-5 5h22a5 5 0 1 0-5-5v22a5 5 0 1 0 5-5H13a5 5 0 1 0 5 5z"/>',
     'tabs': '<path d="M5 40V16a3 3 0 0 1 3-3h9l3 5h20a3 3 0 0 1 3 3v19z"/><path d="M20 13h7l3 5"/>',
+    # --- More variety (v3): catalogue & shop, chat & chatbots, web, growth, Kolkata ---
+    'parcel': '<path d="M7 15 24 7l17 8v18L24 41 7 33z"/><path d="M7 15l17 8 17-8M24 23v18"/><path d="M15.5 11 32 19v7"/>',
+    'bag': '<path d="M10 16h28l-2 25H12z"/><path d="M18 20v-6a6 6 0 0 1 12 0v6"/>',
+    'barcode': '<rect x="5" y="10" width="38" height="28" rx="3"/><path d="M11 16v16M15 16v16M19 16v12M23 16v16M27 16v12M31 16v16M36 16v12"/>',
+    'store': '<path d="M8 20v20h32V20"/><path d="M5 12l3-6h32l3 6c0 4-3 7-6.5 7S30 16 30 12c0 4-2.7 7-6 7s-6-3-6-7c0 4-2.7 7-6 7S5 16 5 12z"/><path d="M19 40V29h10v11"/>',
+    'truck': '<path d="M4 12h24v20H4zM28 19h9l7 7v6H28z"/><circle cx="12" cy="35" r="4" fill="#fff"/><circle cx="36" cy="35" r="4" fill="#fff"/>',
+    'catalog': '<path d="M24 12c-5-4-12-5-18-4v28c6-1 13 0 18 4 5-4 12-5 18-4V8c-6-1-13 0-18 4z"/><path d="M24 12v28"/><path d="M11 16h8M11 22h8M29 16h8M29 22h8"/>',
+    'typing': '<path d="M9 9h30a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H23l-9 8v-8H9a4 4 0 0 1-4-4V13a4 4 0 0 1 4-4z"/><circle cx="16" cy="21" r="2" fill="INK"/><circle cx="24" cy="21" r="2" fill="INK"/><circle cx="32" cy="21" r="2" fill="INK"/>',
+    'bot': '<rect x="8" y="14" width="32" height="24" rx="8"/><path d="M24 14V9"/><circle cx="24" cy="6.5" r="2.5"/><circle cx="18" cy="25" r="2.6" fill="INK"/><circle cx="30" cy="25" r="2.6" fill="INK"/><path d="M19 32h10M8 24H4M40 24h4"/>',
+    'call': '<path d="M14 6l6 1 3 9-4 3c2 5 6 9 11 11l3-4 9 3 1 6c0 3-3 6-6 6C21 40 8 27 8 12c0-3 3-6 6-6z"/><path d="M29 9a10 10 0 0 1 10 10M29 15a4 4 0 0 1 4 4"/>',
+    'megaphone': '<path d="M8 20v8h6l18 9V11l-18 9z"/><path d="M14 28l3 10h5l-2-9"/><path d="M37 19c2 2 2 8 0 10"/>',
+    'seo': '<circle cx="20" cy="20" r="13"/><path d="M29.5 29.5 41 41"/><path d="M13 25l5-5 4 3 6-7"/>',
+    'speed': '<path d="M8 34a17 17 0 1 1 32 0"/><path d="M24 31l9-7"/><circle cx="24" cy="31" r="2.5" fill="INK"/><path d="M11 23l2 1M24 15v2M37 23l-2 1"/>',
+    'responsive': '<rect x="4" y="9" width="30" height="21" rx="2"/><path d="M13 36h10M18 30v6"/><rect x="31" y="18" width="13" height="22" rx="2.5" fill="#fff"/><path d="M36 36h3"/>',
+    'cookie': '<path d="M40 25A16 16 0 1 1 23 8a5 5 0 0 0 7 6 5 5 0 0 0 10 11z"/><circle cx="17" cy="21" r="1.8" fill="INK"/><circle cx="25" cy="30" r="1.8" fill="INK"/><circle cx="16" cy="31" r="1.5" fill="INK"/><circle cx="30" cy="21" r="1.4" fill="INK"/>',
+    'component': '<path d="M24 5l6 6-6 6-6-6zM24 31l6 6-6 6-6-6zM11 18l6 6-6 6-6-6zM37 18l6 6-6 6-6-6z"/>',
+    'grid': '<rect x="7" y="7" width="34" height="34" rx="3"/><path d="M18.3 7v34M29.6 7v34M7 18.3h34M7 29.6h34"/>',
+    'wheel': '<circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34M12 12l24 24M36 12 12 36"/><circle cx="24" cy="24" r="5" fill="#fff"/>',
+    'caret': '<path d="M17 8c3 0 7 0 7 4v24c0 4-4 4-7 4M31 8c-3 0-7 0-7 4v24c0 4 4 4 7 4M19 24h10"/>',
+    'plug': '<path d="M17 6v9M31 6v9M12 15h24v7a12 12 0 0 1-24 0z"/><path d="M24 34v9"/>',
+    'loop': '<path d="M24 24c-4-5-7-8-11-8a8 8 0 0 0 0 16c4 0 7-3 11-8s7-8 11-8a8 8 0 0 1 0 16c-4 0-7-3-11-8z"/>',
+    'trend': '<path d="M6 40h36"/><path d="M8 33l10-10 7 6 13-14"/><path d="M31 15h7v7"/>',
+    'target': '<circle cx="22" cy="26" r="15"/><circle cx="22" cy="26" r="8"/><circle cx="22" cy="26" r="2" fill="INK"/><path d="M22 26 39 9M33 8h7v7"/>',
+    'trophy': '<path d="M15 7h18v10a9 9 0 0 1-18 0z"/><path d="M15 10H8c0 6 3 9 7 9M33 10h7c0 6-3 9-7 9"/><path d="M24 26v8M16 41h16M19 34h10l1 7H18z"/>',
+    'clock': CLOCK(0),
+    'hourglass': '<path d="M13 6h22M13 42h22M15 6c0 9 9 12 9 18s-9 9-9 18M33 6c0 9-9 12-9 18s9 9 9 18"/><path d="M19 37l5-4 5 4z" fill="INK"/>',
+    'plant': '<path d="M14 30h20l-3 12H17z"/><path d="M24 30V17"/><path d="M24 22c-1-6-6-9-12-8 0 6 5 9 12 8zM24 18c1-6 6-9 12-8 0 6-5 9-12 8z"/>',
+    'pie': '<circle cx="24" cy="24" r="17"/><path d="M24 7v17l12 12"/>',
+    'bridge': '<path d="M3 34h42M8 34V13M40 34V13"/><path d="M8 13l8 8 8-6 8 6 8-8M8 20h32M16 21v13M24 15v19M32 21v13"/><path d="M3 39c3 2 6 2 9 0s6-2 9 0 6 2 9 0 6-2 9 0 6 2 6 0"/>',
+    'taxi': '<path d="M5 30v-5l5-2 5-8h17l5 8 6 2v5z"/><path d="M17 16l-3 7h20l-3-7"/><circle cx="13" cy="31" r="4" fill="#fff"/><circle cx="35" cy="31" r="4" fill="#fff"/><rect x="20" y="9" width="8" height="5" rx="1"/>',
+    'tram': '<rect x="8" y="13" width="32" height="24" rx="4"/><path d="M12 17h7v6h-7zM21 17h6v6h-6zM29 17h7v6h-7zM8 28h32"/><path d="M24 13V7l9-3"/><circle cx="15" cy="40" r="2.5"/><circle cx="33" cy="40" r="2.5"/><path d="M4 44h40"/>',
+    'chai': CHAI(0),
 }
 
 # Extra frames used only by the live animation, never placed on the tile.
@@ -148,6 +199,17 @@ EXTRA = {
     'wifi_1': '<circle cx="24" cy="39" r="1.8" fill="INK"/>',
     'wifi_2': '<path d="M18 33c4-3 8-3 12 0"/><circle cx="24" cy="39" r="1.8" fill="INK"/>',
     'wifi_3': '<path d="M12 26c7-6 17-6 24 0M18 33c4-3 8-3 12 0"/><circle cx="24" cy="39" r="1.8" fill="INK"/>',
+    # v3 animation frames
+    'typing_a': '<path d="M9 9h30a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H23l-9 8v-8H9a4 4 0 0 1-4-4V13a4 4 0 0 1 4-4z"/><circle cx="16" cy="18" r="2" fill="INK"/><circle cx="24" cy="21" r="2" fill="INK"/><circle cx="32" cy="21" r="2" fill="INK"/>',
+    'typing_b': '<path d="M9 9h30a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H23l-9 8v-8H9a4 4 0 0 1-4-4V13a4 4 0 0 1 4-4z"/><circle cx="16" cy="21" r="2" fill="INK"/><circle cx="24" cy="18" r="2" fill="INK"/><circle cx="32" cy="21" r="2" fill="INK"/>',
+    'typing_c': '<path d="M9 9h30a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H23l-9 8v-8H9a4 4 0 0 1-4-4V13a4 4 0 0 1 4-4z"/><circle cx="16" cy="21" r="2" fill="INK"/><circle cx="24" cy="21" r="2" fill="INK"/><circle cx="32" cy="18" r="2" fill="INK"/>',
+    'bot_blink': '<rect x="8" y="14" width="32" height="24" rx="8"/><path d="M24 14V9"/><circle cx="24" cy="6.5" r="2.5"/><path d="M15.5 25h5M27.5 25h5"/><path d="M19 32h10M8 24H4M40 24h4"/>',
+    'speed_1': '<path d="M8 34a17 17 0 1 1 32 0"/><path d="M24 31l-10-5"/><circle cx="24" cy="31" r="2.5" fill="INK"/><path d="M11 23l2 1M24 15v2M37 23l-2 1"/>',
+    'speed_2': '<path d="M8 34a17 17 0 1 1 32 0"/><path d="M24 31l-3-11"/><circle cx="24" cy="31" r="2.5" fill="INK"/><path d="M11 23l2 1M24 15v2M37 23l-2 1"/>',
+    'speed_3': '<path d="M8 34a17 17 0 1 1 32 0"/><path d="M24 31l5-10"/><circle cx="24" cy="31" r="2.5" fill="INK"/><path d="M11 23l2 1M24 15v2M37 23l-2 1"/>',
+    **{f'clock_{i}': CLOCK(i) for i in range(1, 8)},
+    'chai_1': CHAI(1),
+    'chai_2': CHAI(2),
 }
 
 FILLERS = [
@@ -166,7 +228,9 @@ rnd.shuffle(names)
 
 # Poisson-disc style placement inside the tile with wrap-around distance.
 placed = []
-MIN_D = TILE / 11.2
+# Spacing is fixed in tile pixels (it was TILE/11.2 on the original 640px tile),
+# so a bigger tile holds more doodles at the same density instead of spreading them out.
+MIN_D = 640 / 11.2
 
 def wrap_dist(a, b):
     dx = abs(a[0] - b[0]); dy = abs(a[1] - b[1])
@@ -175,7 +239,7 @@ def wrap_dist(a, b):
 
 attempts = 0
 idx = 0
-while attempts < 40000 and len(placed) < 140:
+while attempts < 60000 and len(placed) < 220:
     attempts += 1
     p = (rnd.uniform(0, TILE), rnd.uniform(0, TILE))
     if all(wrap_dist(p, q[:2]) >= MIN_D for q in placed):
@@ -187,7 +251,7 @@ while attempts < 40000 and len(placed) < 140:
 # Fillers in the remaining gaps.
 fillers = []
 attempts = 0
-while attempts < 30000 and len(fillers) < 80:
+while attempts < 40000 and len(fillers) < int(80 * (TILE / 640) ** 2):
     attempts += 1
     p = (rnd.uniform(0, TILE), rnd.uniform(0, TILE))
     if all(wrap_dist(p, q[:2]) >= MIN_D * 0.6 for q in placed) and \

@@ -96,7 +96,7 @@ export function homeParagraphs(links: HomeLinks): Paragraph[] {
         { kind: 'object', object: 'toggle' },
         { kind: 'text', text: 'We also design and develop personalised chatbots' },
         { kind: 'object', object: 'chat' },
-        { kind: 'text', text: 'for your website that answer your customers, any time of day.' },
+        { kind: 'text', text: 'for your website that answer your customers, any time of the day.' },
         { kind: 'object', object: 'dayNight' },
       ],
     },

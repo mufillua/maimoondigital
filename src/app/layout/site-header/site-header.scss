@@ -22,6 +22,95 @@
   app-brand-mark { font-size: 1.12rem; color: var(--c-ink); }
 }
 
+/* On load the name rises in letter by letter, out of a soft blur, after the M has drawn. */
+.brand__word { display: inline-flex; }
+
+.ch {
+  display: inline-block;
+  white-space: pre;
+  animation: ch-in 620ms var(--ease-out) both;
+  animation-delay: calc(560ms + var(--i, 0) * 26ms);
+}
+
+@keyframes ch-in {
+  from { opacity: 0; filter: blur(6px); transform: translateY(0.4em); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+/* ---------- Pinned logo ---------- */
+/* Just the M, in a small frosted pill, once the header has scrolled away.
+   Hovering it (or focusing it with the keyboard) slides the name out. */
+.brand-pin {
+  position: fixed;
+  z-index: 40;
+  top: 0.875rem;
+  left: max(var(--gutter), calc((100vw - var(--col)) / 2));
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: 2.75rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  font-size: 1.125rem;
+  font-weight: 620;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-12px) scale(0.9);
+  transition:
+    opacity 260ms var(--ease-out),
+    transform 380ms var(--ease-out),
+    padding 460ms var(--ease-out),
+    gap 460ms var(--ease-out),
+    visibility 0s linear 380ms;
+
+  app-brand-mark { font-size: 1.3rem; color: var(--c-ink); }
+
+  &.is-on {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition:
+      opacity 260ms var(--ease-out),
+      transform 380ms var(--ease-out),
+      padding 460ms var(--ease-out),
+      gap 460ms var(--ease-out),
+      visibility 0s;
+  }
+}
+
+/* The name sits hidden behind the tile and slides out on hover. */
+.brand-pin__word {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-1em);
+  transition: max-width 460ms var(--ease-out), opacity 300ms var(--ease-out), transform 460ms var(--ease-out);
+}
+
+.brand-pin:focus-visible { gap: 0.5rem; padding-right: 0.95rem; }
+.brand-pin:focus-visible .brand-pin__word { max-width: 9em; opacity: 1; transform: none; }
+
+@media (hover: hover) {
+  .brand-pin:hover { gap: 0.5rem; padding-right: 0.95rem; }
+  .brand-pin:hover .brand-pin__word { max-width: 9em; opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-pin, .brand-pin__word { transition: none; }
+}
+
 .nav { position: relative; }
 
 /* Desktop / tablet pill — echoes the reference's "Hiring · Web Designer". */

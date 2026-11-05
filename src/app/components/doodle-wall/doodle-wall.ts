@@ -39,7 +39,8 @@ interface DoodleData {
 
 type Anim =
   | 'spin' | 'steps' | 'turn' | 'swing' | 'pulse' | 'glow' | 'twinkle' | 'bob' | 'lift'
-  | 'fly' | 'drop' | 'tap' | 'toggle' | 'wifi' | 'wiggle' | 'blink' | 'zoom' | 'shimmer';
+  | 'fly' | 'drop' | 'tap' | 'toggle' | 'wifi' | 'wiggle' | 'blink' | 'zoom' | 'shimmer'
+  | 'type' | 'botblink' | 'ring' | 'gauge' | 'caret' | 'grow' | 'flip' | 'sway' | 'drive' | 'clock' | 'steam';
 
 /** Which doodles move, and how. Everything else stays still. */
 const ANIMS: Record<string, Anim> = {
@@ -54,6 +55,11 @@ const ANIMS: Record<string, Anim> = {
   bug: 'wiggle', wand: 'wiggle', pen: 'wiggle', bucket: 'wiggle', scissors: 'wiggle',
   eraser: 'wiggle', smile: 'wiggle',
   eye: 'blink', zoom: 'zoom',
+  // v3 doodles
+  typing: 'type', bot: 'botblink', call: 'ring', megaphone: 'pulse', seo: 'zoom', speed: 'gauge',
+  caret: 'caret', trend: 'grow', chart: 'grow', hourglass: 'flip', plant: 'sway', clock: 'clock', chai: 'steam',
+  truck: 'drive', taxi: 'drive', tram: 'drive', parcel: 'drop', bag: 'swing', wheel: 'spin', component: 'turn',
+  pie: 'turn', target: 'tap', trophy: 'glow', plug: 'wiggle', cookie: 'wiggle', store: 'bob', catalog: 'bob',
 };
 
 interface Pose { x: number; y: number; r: number; sx: number; sy: number; a: number; on: boolean; frame?: string }
@@ -285,6 +291,33 @@ export class DoodleWall {
         case 'wiggle': { const u = cyc(4.4); if (u < 0.9) p.r = 0.2 * Math.sin((u / 0.9) * Math.PI * 6) * (1 - u / 0.9); else p.on = false; break; }
         case 'blink': { const u = cyc(4); if (u < 0.22) p.sy = 1 - 0.85 * Math.sin((Math.PI * u) / 0.22); else p.on = false; break; }
         case 'zoom': p.sx = p.sy = 1 + 0.12 * Math.sin(TAU * (t / 3 + ph)); break;
+        // --- v3 ---
+        case 'type': { const u = cyc(1.2); p.frame = u < 0.3 ? 'typing_a' : u < 0.6 ? 'typing_b' : u < 0.9 ? 'typing_c' : 'typing'; break; }
+        case 'botblink': { const u = cyc(4.2); if (u < 0.5) { if (u < 0.12 || (u > 0.26 && u < 0.38)) p.frame = 'bot_blink'; } else p.on = false; break; }
+        case 'ring': { const u = cyc(4.8); if (u < 1.1) p.r = u < 0.45 || u > 0.65 ? 0.2 * Math.sin(u * 60) : 0; else p.on = false; break; }
+        case 'gauge': { const u = cyc(4.4); if (u < 0.9) p.frame = u < 0.3 ? 'speed_1' : u < 0.6 ? 'speed_2' : 'speed_3'; else p.on = false; break; }
+        case 'caret': p.a = Math.floor(t / 0.55 + ph * 2) % 2 ? 0.15 : 1; break;
+        case 'grow': {
+          const u = cyc(5);
+          if (u < 1.2) {
+            const e = ease(Math.min(1, u / 0.9)), h = size / 2;
+            p.sx = p.sy = 0.55 + 0.45 * e; p.a = 0.4 + 0.6 * e;
+            p.x = -(1 - p.sx) * h; p.y = (1 - p.sy) * h; // grow out of the bottom-left corner
+          } else p.on = false;
+          break;
+        }
+        case 'flip': {
+          const u = cyc(6);
+          if (u < 0.7) p.r = Math.PI * ease(u / 0.7);
+          else if (u < 2.6) p.r = Math.PI;
+          else if (u < 3.3) p.r = Math.PI * (1 + ease((u - 2.6) / 0.7));
+          else p.on = false;
+          break;
+        }
+        case 'sway': { p.r = 0.14 * Math.sin(TAU * (t / 3.8 + ph)); const h = size / 2; p.x = Math.sin(p.r) * h; p.y = h - Math.cos(p.r) * h; break; }
+        case 'drive': { const u = cyc(6); if (u < 2.4) { p.x = 9 * Math.sin((TAU * u) / 2.4); p.y = -0.9 * Math.abs(Math.sin(u * 16)); } else p.on = false; break; }
+        case 'clock': p.frame = 'clock_' + (Math.floor(t / 0.8 + ph * 8) % 8 || ''); if (p.frame === 'clock_') p.frame = 'clock'; break;
+        case 'steam': p.frame = ['chai', 'chai_1', 'chai_2'][Math.floor(t / 0.45 + ph * 3) % 3]; break;
       }
       return p;
     };

@@ -6,7 +6,9 @@
   margin-inline: auto;
   padding-top: 1.8rem;
   padding-bottom: 5.5rem;
-  animation: view-enter 700ms var(--ease-out) both;
+  /* backwards, not both: once finished it must not leave a transform behind,
+     or the pinned logo (position: fixed) would scroll with the page. */
+  animation: view-enter 700ms var(--ease-out) backwards;
 }
 
 /* The opening line sits well down the first screen, not at the top. */

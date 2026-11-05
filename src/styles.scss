@@ -57,7 +57,7 @@
 
   /* Wallpaper */
   --doodle-opacity: 0.085;
-  --doodle-size: 640px;
+  --doodle-size: 760px;         /* the tile is 760px; doodles keep their size */
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -74,7 +74,7 @@
    The text spans the whole width there, so the wallpaper is lighter
    overall instead of softened behind a column. */
 @media (max-width: 639.98px) {
-  :root { --doodle-size: 460px; --doodle-opacity: 0.055; }
+  :root { --doodle-size: 546px; --doodle-opacity: 0.055; }
   body::before,
   app-doodle-wall { -webkit-mask-image: none; mask-image: none; }
 }

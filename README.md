@@ -119,6 +119,7 @@ The image fades in over the card. If a file is missing, the card stays.
 
 | Where | What happens |
 | --- | --- |
+| Header logo | On load the black tile pops in and the M draws itself stroke by stroke, then "maimoon digital" rises in letter by letter. On hover the tile nudges forward and the middle of the M dips and springs back. Once the header scrolls away, the M stays pinned at the top left in a small frosted pill, scrolling up or down (`PIN_AFTER` in `site-header.ts`); hovering it slides the name out. |
 | Opening sentence | Words rise in one by one on load; the app icon pops in after them. |
 | All home text | Grey words turn black left to right, running one line ahead of the middle of the screen (`LEAD_LINES` in `scroll-reveal.directive.ts`). |
 | Inline icons and client logos | Pop in with a small overshoot when reached. Logos tilt on hover. Three sparkles after "stand out." twinkle in turn; a globe turns with a pin landing on it after "presence online."; a tile flips between a pen nib and </> after "design and develop"; a laptop opens and builds a page after "every screen,"; two puzzle pieces (design and code) click together after "responsive development," |
@@ -133,9 +134,12 @@ The image fades in over the card. If a file is missing, the card stays.
 
 ## Background wallpaper
 
-The page has a faint doodle wallpaper, like a chat app's, made of about 90
-original web-design line icons (cursors, browser windows, `</>`, pen tools,
-phones, gears, rockets, toggles and more). It is fixed behind the page, so it
+The page has a faint doodle wallpaper, like a chat app's, made of about 120
+original line icons: web design (cursors, browser windows, `</>`, pen tools,
+phones, gears, rockets, toggles and more), catalogue and shop (parcel, bag,
+barcode, storefront, delivery truck), chat and chatbots (typing bubble, chatbot
+face, ringing phone), growth (rising chart, target, trophy, plant) and a few
+Kolkata ones (Howrah Bridge, a yellow taxi, a tram and a kulhad of chai). It is fixed behind the page, so it
 stays put while the text scrolls.
 
 **It moves.** `src/app/components/doodle-wall` draws the wallpaper on a canvas
@@ -146,7 +150,10 @@ so that:
   beats, the bulb glows, stars twinkle, the rocket hovers, the paper plane flies
   off and comes back, the map pin and download arrow bounce, the cursor, hand,
   thumbs-up and button tap, the toggle switches on and off, the wifi bars fill
-  up, the eye blinks and a few tools wiggle;
+  up, the eye blinks and a few tools wiggle. The typing dots bounce, the chatbot
+  blinks, the phone rings, the speed needle sweeps up, the text cursor blinks,
+  the chart grows, the clock ticks, the hourglass flips, the plant sways, the
+  chai steams, and the truck, taxi and tram drive back and forth;
 - on computers with a mouse, doodles near the pointer drift away from it, tilt
   and darken, then ease back. A click makes them hop further.
 
@@ -160,7 +167,7 @@ Files:
 | --- | --- |
 | `public/bg/doodles.svg` | The still wallpaper: shown first while the page loads, and for reduced motion. |
 | `public/bg/doodles.json` | The same layout as data, used by the animated version. |
-| `tools/make_doodles.py` | Makes both files. Run `python3 tools/make_doodles.py public/bg/doodles.svg 640 11 "#12305e"`. |
+| `tools/make_doodles.py` | Makes both files. Run `python3 tools/make_doodles.py public/bg/doodles.svg 760 11 "#12305e"`. |
 
 Which doodles move, and how, is the `ANIMS` list at the top of `doodle-wall.ts`.
 The reach of the mouse effect is `REACH`.
@@ -170,7 +177,7 @@ Tune the look in `src/styles.scss`:
 | Setting | Default | What it does |
 | --- | --- | --- |
 | `--doodle-opacity` | `0.085` (phones `0.055`) | How strong the doodles are. Try `0.05` for subtler, `0.12` for bolder. |
-| `--doodle-size` | `640px` (phones `460px`) | Tile size. Smaller means smaller, denser doodles. |
+| `--doodle-size` | `760px` (phones `546px`) | Tile size. Smaller means smaller, denser doodles. Keep it equal to the tile the generator made (760) for the intended size. |
 
 On desktop the doodles are softer behind the text column and full strength in
 the side margins, so the grey, not-yet-revealed words stay easy to read.

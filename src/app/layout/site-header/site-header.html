@@ -1,7 +1,7 @@
 <header class="header">
   <a class="brand" href="/" (click)="toTop($event)" [attr.aria-label]="site.name + ', back to top'">
-    <app-brand-mark />
-    <span class="brand__word">{{ site.wordmark }}</span>
+    <app-brand-mark [intro]="true" />
+    <span class="brand__word" aria-hidden="true">@for (ch of letters; track $index) {<span class="ch" [style.--i]="$index">{{ ch }}</span>}</span>
   </a>
 
   <nav class="nav" aria-label="Main">
@@ -27,3 +27,11 @@
     </div>
   </nav>
 </header>
+
+<!-- Once the header has scrolled away, the logo mark (just the M) stays pinned
+     at the top; hovering it slides the name out from behind the tile. -->
+<a class="brand-pin" href="/" (click)="toTop($event)" [class.is-on]="pinned()"
+   [attr.aria-label]="site.name + ', back to top'" [attr.aria-hidden]="pinned() ? null : 'true'" [attr.tabindex]="pinned() ? null : -1">
+  <app-brand-mark />
+  <span class="brand-pin__word" aria-hidden="true">{{ site.wordmark }}</span>
+</a>
